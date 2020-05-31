@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AddTickerComponent } from './add-ticker/add-ticker.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddTickerComponent
   ],
   imports: [
     BrowserModule
