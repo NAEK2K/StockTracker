@@ -1,0 +1,25 @@
+{
+  "name": "stocktracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NAEK2K/StockTracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NAEK2K/StockTracker/issues"
+  },
+  "homepage": "https://github.com/NAEK2K/StockTracker#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "lowdb": "^1.0.0",
+    "uuid": "^8.1.0",
+    "uuidv4": "^6.1.0"
+  }
+}
