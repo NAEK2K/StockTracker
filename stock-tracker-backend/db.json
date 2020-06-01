@@ -3,7 +3,12 @@
     {
       "username": "steve",
       "password": "steve123",
-      "tickers": []
+      "tickers": [
+        "WEED",
+        "RY",
+        "ACB",
+        "SHOP"
+      ]
     },
     {
       "username": "steveee",

@@ -9,7 +9,7 @@ app.use(express.json());
 const path = require("path");
 const fs = require("fs");
 // uuidv4
-const { uuid } = require('uuidv4');
+const { uuid } = require("uuidv4");
 // lowdb
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
@@ -25,7 +25,7 @@ app.post("/register", (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
   if (users.map((x) => (x = x.username)).includes(username)) {
-    res.sendStatus(400);
+    res.sendStatus(401);
     return;
   } else {
     db.get("users")
@@ -43,14 +43,42 @@ app.post("/register", (req, res) => {
 // login route
 app.post("/login", (req, res) => {
   let user = db.get("users").find({ username: req.body.username }).value();
-  console.log(user);
   if (!user) {
-    res.sendStatus(400);
+    res.sendStatus(401);
     return;
   } else if (user.password == req.body.password) {
     let auth = uuid();
     loggedIn.push({ username: req.body.username, auth: auth });
     res.send({ auth: auth });
+  }
+});
+// add ticker route
+app.post("/addTicker", (req, res) => {
+  let ticker = req.body.ticker;
+  let auth = req.body.auth;
+  let userInfo = loggedIn.filter((x) => x.auth == auth)[0];
+  if (userInfo) {
+    // find if auth exists
+    let tickers = db
+      .get("users")
+      .find({ username: userInfo.username })
+      .get("tickers")
+      .value();
+    if (tickers.includes(ticker)) {
+      res.sendStatus(401);
+      return;
+    } else {
+      db.get("users")
+        .find({ username: userInfo.username })
+        .get("tickers")
+        .push(ticker)
+        .write();
+      res.sendStatus(200);
+      return;
+    }
+  } else {
+    res.sendStatus(401);
+    return;
   }
 });
 // listen
