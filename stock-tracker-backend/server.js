@@ -56,7 +56,7 @@ app.post("/login", (req, res) => {
 app.post("/addTicker", (req, res) => {
   let ticker = req.body.ticker;
   let auth = req.body.auth;
-  let userInfo = loggedIn.filter((x) => x.auth == auth)[0];
+  let userInfo = getDataFromAuth(auth);
   if (userInfo) {
     // find if auth exists
     let tickers = db
@@ -81,7 +81,40 @@ app.post("/addTicker", (req, res) => {
     return;
   }
 });
+// remove ticker route
+app.post("/removeTicker", (req, res) => {
+  let ticker = req.body.ticker;
+  let auth = req.body.auth;
+  let userInfo = getDataFromAuth(auth);
+  if (userInfo) {
+    // find if auth exists
+    let tickers = db
+      .get("users")
+      .find({ username: userInfo.username })
+      .get("tickers")
+      .value();
+    let index = tickers.indexOf(ticker);
+    if (index >= 0) {
+      tickers.splice(index, 1);
+      db.get("users")
+        .find({ username: userInfo.username })
+        .assign({ tickers: tickers })
+        .write();
+      res.sendStatus(200);
+      return;
+    } else {
+      res.sendStatus(401);
+      return;
+    }
+  } else {
+    res.sendStatus(401);
+    return;
+  }
+});
 // listen
 app.listen(port, () => {
   console.log(`STOCK TRACKER BACKEND RUNNING ON PORT ${port}`);
 });
+function getDataFromAuth(auth) {
+  return loggedIn.filter((x) => x.auth == auth)[0];
+}
