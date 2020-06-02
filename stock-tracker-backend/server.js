@@ -5,6 +5,12 @@ const port = 8080;
 // express config
 app.use(express.urlencoded());
 app.use(express.json());
+// scrape
+const got = require("got");
+const cheerio = require("cheerio");
+// cors
+const cors = require("cors");
+app.use(cors());
 // file system
 const path = require("path");
 const fs = require("fs");
@@ -42,6 +48,7 @@ app.post("/register", (req, res) => {
 });
 // login route
 app.post("/login", (req, res) => {
+  console.log(req.body);
   let user = db.get("users").find({ username: req.body.username }).value();
   if (!user) {
     res.sendStatus(401);
@@ -54,6 +61,7 @@ app.post("/login", (req, res) => {
 });
 // add ticker route
 app.post("/addTicker", (req, res) => {
+  console.log(req.body);
   let ticker = req.body.ticker;
   let auth = req.body.auth;
   let userInfo = getDataFromAuth(auth);
@@ -111,6 +119,56 @@ app.post("/removeTicker", (req, res) => {
     return;
   }
 });
+app.post("/getTickers", (req, res) => {
+  let auth = req.body.auth;
+  let userInfo = getDataFromAuth(auth);
+  if (userInfo) {
+    let tickers = db
+      .get("users")
+      .find({ username: userInfo.username })
+      .get("tickers")
+      .value();
+    res.send({ tickers: tickers });
+  } else {
+    res.sendStatus(401);
+  }
+});
+// scrape function
+const scrape = async (ticker) => {
+  try {
+    let jsonRes = {};
+    const response = await got(
+      `https://web.tmxmoney.com/quote.php?qm_symbol=${ticker}`
+    );
+    const $ = cheerio.load(response.body);
+    let price = $("span.price span").text();
+    let change = $("strong.text-green")
+      .text()
+      .replace(/\s/g, "")
+      .split("(")
+      .map((x) => x.replace(")", "").replace("%", ""));
+    if (change.length != 2)
+      change = $("strong.text-red")
+        .text()
+        .replace(/\s/g, "")
+        .split("(")
+        .map((x) => x.replace(")", "").replace("%", ""));
+    jsonRes.ticker = ticker;
+    jsonRes.value = price;
+    jsonRes.changeValue = change[0];
+    jsonRes.changePercent = change[1];
+    jsonRes.positiveChange = jsonRes.changeValue > 0;
+    return jsonRes;
+  } catch (e) {
+    console.log(error.response.body);
+  }
+};
+// scrape route
+app.get('/ticker/:ticker', (req, res) => {
+    scrape(req.params.ticker).then((results) => {
+      res.send(results)
+  })
+})
 // listen
 app.listen(port, () => {
   console.log(`STOCK TRACKER BACKEND RUNNING ON PORT ${port}`);
