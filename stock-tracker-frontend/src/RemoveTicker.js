@@ -15,8 +15,8 @@ function RemoveTicker(props) {
   }
   return (
     <div>
-      <input value={input} onChange={(e) => setInput(e.target.value)}/>
       <button onClick={removeTicker}>Remove Ticker</button>
+      <input value={input} onChange={(e) => setInput(e.target.value)}/>
     </div>
   );
 }

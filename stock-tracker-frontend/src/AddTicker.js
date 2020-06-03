@@ -15,8 +15,8 @@ function AddTicker(props) {
   }
   return (
     <div>
-      <input value={input} onChange={(e) => setInput(e.target.value)}/>
       <button onClick={addTicker}>Add Ticker</button>
+      <input value={input} onChange={(e) => setInput(e.target.value)}/>
     </div>
   );
 }

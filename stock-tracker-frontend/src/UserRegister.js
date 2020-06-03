@@ -34,6 +34,7 @@ function UserRegister(props) {
   }
   return (
     <div>
+      <h1>Stock Tracker</h1>
       <p>
         Username:{" "}
         <input onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -52,6 +53,7 @@ function UserRegister(props) {
       <p>
         <button onClick={register}>Register</button>
       </p>
+      <p>Developed by <a href="https://naek.ca">NAEK</a></p>
     </div>
   );
 }

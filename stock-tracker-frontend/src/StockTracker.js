@@ -30,10 +30,14 @@ function StockTracker(props) {
   })
   return (
     <div>
+      <h1>Stock Tracker</h1>
       <AddTicker getTickers={getTickers} auth={props.auth}/>
       <RemoveTicker getTickers={getTickers} auth={props.auth}/>
       <h3>Tracked Tickers</h3>
-      {tickers}
+      <div className="stockList">
+        {tickers}
+      </div>
+      <p>Developed by <a href="https://naek.ca">NAEK</a></p>
     </div>
   );
 }

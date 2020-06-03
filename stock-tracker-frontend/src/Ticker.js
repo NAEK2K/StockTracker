@@ -5,6 +5,7 @@ function Ticker(props) {
   const [value, setValue] = useState(0);
   const [changeValue, setChangeValue] = useState(0);
   const [changePercent, setChangePercent] = useState(0);
+  const [positiveChange, setPositiveChange] = useState(true);
   useEffect(() => {
     async function fetchData() {
       const getTickerUrl = `http://localhost:8080/ticker/${ticker}`;
@@ -17,19 +18,32 @@ function Ticker(props) {
       setValue(data.value);
       setChangeValue(data.changeValue);
       setChangePercent(data.changePercent);
+      setPositiveChange(data.positiveChange);
     }
     fetchData();
   });
 
-  return (
-    <div>
-      <p>Ticker: {ticker}</p>
-      <p>Value: {value}</p>
-      <p>
-        Change: {changeValue} ({changePercent})
-      </p>
-    </div>
-  );
+  if(positiveChange) {
+    return (
+      <div className="ticker positive">
+        <p>Ticker: {ticker}</p>
+        <p>Value: ${value}</p>
+        <p>
+          Change: ${changeValue} (%{changePercent})
+        </p>
+      </div>
+    );
+  } else {
+    return (
+      <div className="ticker negative">
+        <p>Ticker: {ticker}</p>
+        <p>Value: ${value}</p>
+        <p>
+          Change: ${changeValue} (%{changePercent})
+        </p>
+      </div>
+    );
+  }
 }
 
 export default Ticker;
