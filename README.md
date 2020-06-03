@@ -11,6 +11,7 @@ This is a stock tracker app I created with a NodeJS backend, ReactJS frontend, a
 
 ## Features
 - Supports creating and using personal accounts
+- Saves the users tracked tickers server side
 - Shows the value, change, and percent change in a stock
 - Highlights stock in red or green depending on how they are performing
 
