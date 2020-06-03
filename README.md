@@ -2,7 +2,8 @@
 
 ## Screenshot
 
-![screenshot](https://media.discordapp.net/attachments/655125450057711644/717534173471965267/unknown.png)
+![screenshot-login](https://media.discordapp.net/attachments/655125450057711644/717534896318316614/unknown.png)
+![screenshot-dashboard](https://media.discordapp.net/attachments/655125450057711644/717534173471965267/unknown.png)
 
 ## About
 
@@ -13,3 +14,7 @@ This is a stock tracker app I created with a NodeJS backend and a ReactJS fronte
 - Shows the value, change, and percent change in a stock
 - Highlights stock in red or green depending on how they are performing
 
+## Deploy
+- Run `npm install` in both `stock-tracker-frontend` and `stock-tracker-backend`
+- Run the `server.js` file in `/stock-tracker-backend` with `node server.js`
+- Run the front-end with `npm start` in `/stock-tracker-frontend`
