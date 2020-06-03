@@ -7,7 +7,7 @@
 
 ## About
 
-This is a stock tracker app I created with a NodeJS backend and a ReactJS frontend. It allows a user to track certain stocks and display them in a list on their dashboard. This was a project I took on to learn how to use ReactJS to create an app, and I have to say, I think ReactJS has become one of my favorite libraries to use!
+This is a stock tracker app I created with a NodeJS backend, ReactJS frontend, and Lowdb for the database. It allows a user to track certain stocks and display them in a list on their dashboard. This was a project I took on to learn how to use ReactJS to create an app, and I have to say, I think ReactJS has become one of my favorite libraries to use!
 
 ## Features
 - Supports creating and using personal accounts
